@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jiafish的个人空间</title>
+    <style>
+        :root {
+            --main-accent: #FF6B6B;
+            --secondary-accent: #4ECDC4;
+            --dark-bg: #1A1A1A;
+            --glass-opacity: 0.1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(-45deg, 
+                var(--main-accent), 
+                var(--secondary-accent), 
+                var(--dark-bg), 
+                var(--main-accent)
+            );
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: #FFFFFF;
+            min-height: 100vh;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .header {
+            text-align: center;
+            padding: 4rem 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .avatar-container {
+            position: relative;
+            width: 250px;
+            height: 250px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .avatar-blur {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: inherit;
+            backdrop-filter: blur(12px);
+            z-index: -1;
+        }
+
+        .avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid var(--main-accent);
+            transition: transform 0.3s ease;
+        }
+
+        .avatar:hover {
+            transform: translateY(-10px);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(45deg, var(--main-accent), var(--secondary-accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .gallery {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1);
+        }
+
+        .card img {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        footer {
+            background: rgba(26, 26, 26, 0.9);
+            padding: 2rem;
+            margin-top: 6rem;
+            text-align: center;
+        }
+
+        .contact-link {
+            color: var(--main-accent);
+            text-decoration: none;
+            border-bottom: 1px solid currentColor;
+            transition: all 0.3s ease;
+            margin: 0 0.5rem;
+        }
+
+        .contact-link:hover {
+            color: #FFFFFF;
+            transform: scale(1.1);
+            border-color: #FFFFFF;
+        }
+
+        .popup {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(26, 26, 26, 0.9);
+            color: var(--main-accent);
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+
+        .popup.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .copied-text {
+            font-weight: 600;
+            opacity: 0;
+            animation: fadeIn 0.3s forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-container">
+        <div class="header">
+            <div class="avatar-container">
+                <div class="avatar-blur"></div>
+                <img src="logo.png" alt="头像" class="avatar">
+            </div>
+            <h1>Jiafish</h1>
+            <p>一只可爱的...小楠梁？喜欢摄影.无人机.数码.还有....Cosplay?已经18+惹！可以？！</p>
+        </div>
+    </nav>
+
+    <main>
+    <div class="gallery">
+        <a href="1.html" class="card-link">
+            <div class="card">
+                <img src="work1-thumbnail.jpg" alt="作品1缩略图">
+                <h3>这里我还没有时间写点什么，那就把我的头像放上来吧！！全平台同步哦！！QwQ！！</h3>
+            </div>
+        </a>
+        <a href="2.html" class="card-link">
+            <div class="card">
+                <img src="work2-thumbnail.jpg" alt="作品2缩略图">
+                <h3>这是我最喜欢的一张猫猫的壁纸，放上来给你们看看！！听说点击这两个图片有惊喜！！</h3>
+            </div>
+        </a>
+    </div>
+</main>
+
+    <footer>
+        <p>
+            📧 <a href="#" onclick="copyToClipboard('158249253@qq.com')" 
+                 class="contact-link">邮箱：158249253@qq.com</a> 
+            🆔 <a href="http://wpa.qq.com/msgrd?v=3&uin=158249253&site=qq&menu=yes" 
+                 target="_blank" 
+                 rel="noopener noreferrer" 
+                 class="contact-link">QQ：158249253</a> 
+            🐦 <a href="https://x.com/MsWvAdl1of32391?t=X9un1DDgA8gPSvsV6eOjzQ&s=09" 
+                 target="_blank" 
+                 rel="noopener noreferrer" 
+                 class="contact-link">推特</a>
+            🔗 <a href="https://b23.tv/AbDkict" target="_blank" rel="noopener noreferrer" class="contact-link">哔哩哔哩</a>
+        </p>
+    </footer>
+
+    <div id="copyPopup" class="popup">
+        <span>已复制到剪贴板：</span>
+        <span class="copied-text"></span>
+    </div>
+
+    <script>
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                const popup = document.getElementById('copyPopup');
+                const copiedText = popup.querySelector('.copied-text');
+                
+                copiedText.textContent = text;
+                popup.classList.add('active');
+                
+                setTimeout(() => {
+                    popup.classList.remove('active');
+                }, 5000);
+            }).catch(err => {
+                alert('复制失败，请手动复制');
+                console.error('复制失败:', err);
+            });
+            
+            return false;
+        }
+    </script>
+</body>
+</html>
