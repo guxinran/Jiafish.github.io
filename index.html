@@ -30,6 +30,7 @@
             animation: gradientBG 15s ease infinite;
             color: #FFFFFF;
             min-height: 100vh;
+            overflow-x: hidden; /* 防止横向滚动 */
         }
 
         @keyframes gradientBG {
@@ -175,6 +176,32 @@
                 opacity: 1;
             }
         }
+
+        /* 新增音乐控制样式 */
+        #music-control {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 1001;
+            backdrop-filter: blur(10px); /* 毛玻璃效果 */
+        }
+
+        #music-control:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+
+        #music-control.playing {
+            background: rgba(255, 255, 255, 0.3);
+        }
     </style>
 </head>
 <body>
@@ -190,21 +217,21 @@
     </nav>
 
     <main>
-    <div class="gallery">
-        <a href="1.html" class="card-link">
-            <div class="card">
-                <img src="work1-thumbnail.jpg" alt="作品1缩略图">
-                <h3>这里我还没有时间写点什么，那就把我的头像放上来吧！！全平台同步哦！！QwQ！！</h3>
-            </div>
-        </a>
-        <a href="2.html" class="card-link">
-            <div class="card">
-                <img src="work2-thumbnail.jpg" alt="作品2缩略图">
-                <h3>这是我最喜欢的一张猫猫的壁纸，放上来给你们看看！！听说点击这两个图片有惊喜！！</h3>
-            </div>
-        </a>
-    </div>
-</main>
+        <div class="gallery">
+            <a href="1.html" class="card-link">
+                <div class="card">
+                    <img src="work1-thumbnail.jpg" alt="作品1缩略图">
+                    <h3>这里我还没有时间写点什么，那就把我的头像放上来吧！！全平台同步哦！！QwQ！！</h3>
+                </div>
+            </a>
+            <a href="2.html" class="card-link">
+                <div class="card">
+                    <img src="work2-thumbnail.jpg" alt="作品2缩略图">
+                    <h3>这是我最喜欢的一张猫猫的壁纸，放上来给你们看看！！听说点击这两个图片有惊喜！！</h3>
+                </div>
+            </a>
+        </div>
+    </main>
 
     <footer>
         <p>
@@ -222,30 +249,50 @@
         </p>
     </footer>
 
-    <div id="copyPopup" class="popup">
-        <span>已复制到剪贴板：</span>
-        <span class="copied-text"></span>
-    </div>
+    <!-- 新增音乐控制按钮 -->
+    <button id="music-control" class="playing">暂停音乐</button>
 
     <script>
-        function copyToClipboard(text) {
-            navigator.clipboard.writeText(text).then(() => {
-                const popup = document.getElementById('copyPopup');
-                const copiedText = popup.querySelector('.copied-text');
-                
-                copiedText.textContent = text;
-                popup.classList.add('active');
-                
+        // 音乐控制逻辑
+        const musicControl = document.getElementById('music-control');
+        const audio = new Audio('background-music.mp3');
+
+        // 自动播放处理（静音后播放）
+        let isAutoPlayed = false;
+        setTimeout(() => {
+            if (!isAutoPlayed) {
+                playMusic();
+            }
+        }, 2000);
+
+        function playMusic() {
+            audio.muted = true; // 先静音
+            audio.play().then(() => {
+                isAutoPlayed = true;
+                musicControl.textContent = '暂停音乐';
                 setTimeout(() => {
-                    popup.classList.remove('active');
-                }, 5000);
-            }).catch(err => {
-                alert('复制失败，请手动复制');
-                console.error('复制失败:', err);
+                    audio.muted = false; // 1秒后取消静音
+                }, 1000);
+            }).catch(error => {
+                console.error('自动播放失败:', error);
+                musicControl.textContent = '点击播放音乐';
             });
-            
-            return false;
         }
+
+        musicControl.addEventListener('click', () => {
+            if (audio.paused) {
+                playMusic();
+            } else {
+                audio.pause();
+                musicControl.textContent = '播放音乐';
+            }
+        });
+
+        // 音频结束处理
+        audio.addEventListener('ended', () => {
+            musicControl.textContent = '播放音乐';
+            musicControl.classList.remove('playing');
+        });
     </script>
 </body>
 </html>
