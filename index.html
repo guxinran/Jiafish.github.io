@@ -6,37 +6,60 @@
     <title>Jiafish的个人空间</title>
     <style>
         :root {
-            --main-accent: #FF6B6B;
-            --secondary-accent: #4ECDC4;
-            --dark-bg: #1A1A1A;
-            --glass-opacity: 0.1;
+            --main-accent: #5DADE2; /* 淡蓝色主色调 */
+            --secondary-accent: #AED6F1; /* 更浅的蓝色辅助色 */
+            --accent-light: #EBF5FB; /* 非常浅的蓝色 */
+            --dark-bg: #1A252F; /* 深蓝色背景 */
+            --glass-opacity: 0.15; /* 玻璃透明度 */
+            --text-light: #FFFFFF; /* 白色文本 */
+            --text-dark: #1A252F; /* 深色文本 */
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Segoe UI', 'Noto Sans SC', sans-serif;
         }
 
         body {
             background: linear-gradient(-45deg, 
-                var(--main-accent), 
-                var(--secondary-accent), 
                 var(--dark-bg), 
+                #2C3E50, 
+                #34495E, 
                 var(--main-accent)
             );
             background-size: 400% 400%;
             animation: gradientBG 15s ease infinite;
-            color: #FFFFFF;
+            color: var(--text-light);
             min-height: 100vh;
-            overflow-x: hidden; /* 防止横向滚动 */
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* 添加液态玻璃背景效果 */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url(![image]('https://autoglm-agent.aminer.cn/e3b6c961-3691-4b04-bd55-cf9eba96ec08.jpg)') center/cover no-repeat;
+            opacity: 0.15;
+            z-index: -1;
         }
 
         @keyframes gradientBG {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
         }
 
         .header {
@@ -60,9 +83,13 @@
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            background: inherit;
-            backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, var(--glass-opacity));
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.18);
             z-index: -1;
+            transform: scale(1.05);
         }
 
         .avatar {
@@ -71,11 +98,13 @@
             border-radius: 50%;
             object-fit: cover;
             border: 5px solid var(--main-accent);
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
 
         .avatar:hover {
             transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(93, 173, 226, 0.4);
         }
 
         h1 {
@@ -84,11 +113,13 @@
             background: linear-gradient(45deg, var(--main-accent), var(--secondary-accent));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 10px rgba(93, 173, 226, 0.3);
         }
 
         p {
             font-size: 1.2rem;
             opacity: 0.9;
+            line-height: 1.6;
         }
 
         .gallery {
@@ -101,44 +132,82 @@
         }
 
         .card {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, var(--glass-opacity));
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border-radius: 15px;
             padding: 1.5rem;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* 添加液态玻璃效果 */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, 
+                rgba(255, 255, 255, 0.1), 
+                rgba(255, 255, 255, 0.05)
+            );
+            z-index: -1;
+            border-radius: 15px;
         }
 
         .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1);
+            box-shadow: 0 15px 35px rgba(93, 173, 226, 0.3);
+            background: rgba(255, 255, 255, calc(var(--glass-opacity) + 0.05));
         }
 
         .card img {
             width: 100%;
             border-radius: 10px;
             margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover img {
+            transform: scale(1.03);
+        }
+
+        .card h3 {
+            font-size: 1.1rem;
+            line-height: 1.5;
+            color: var(--text-light);
         }
 
         footer {
-            background: rgba(26, 26, 26, 0.9);
+            background: rgba(26, 37, 47, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             padding: 2rem;
             margin-top: 6rem;
             text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .contact-link {
-            color: var(--main-accent);
+            color: var(--secondary-accent);
             text-decoration: none;
             border-bottom: 1px solid currentColor;
             transition: all 0.3s ease;
             margin: 0 0.5rem;
+            display: inline-block;
         }
 
         .contact-link:hover {
-            color: #FFFFFF;
+            color: var(--text-light);
             transform: scale(1.1);
-            border-color: #FFFFFF;
+            border-color: var(--text-light);
         }
 
         .popup {
@@ -146,18 +215,21 @@
             bottom: 2rem;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(26, 26, 26, 0.9);
+            background: rgba(26, 37, 47, 0.9);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             color: var(--main-accent);
             padding: 0.8rem 2rem;
             border-radius: 25px;
             display: flex;
             align-items: center;
             gap: 1rem;
-            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             z-index: 1000;
             opacity: 0;
             transform: translateY(20px);
             transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .popup.active {
@@ -177,34 +249,121 @@
             }
         }
 
-        /* 新增音乐控制样式 */
+        /* 音乐控制样式 */
         #music-control {
             position: fixed;
             bottom: 20px;
             left: 20px;
             padding: 10px 20px;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, var(--glass-opacity));
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border-radius: 25px;
-            border: none;
+            border: 1px solid rgba(255, 255, 255, 0.18);
             color: white;
             font-size: 16px;
             cursor: pointer;
             transition: all 0.3s;
             z-index: 1001;
-            backdrop-filter: blur(10px); /* 毛玻璃效果 */
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
         }
 
         #music-control:hover {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, calc(var(--glass-opacity) + 0.05));
             transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(93, 173, 226, 0.3);
         }
 
         #music-control.playing {
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(93, 173, 226, 0.3);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .header {
+                padding: 3rem 1rem;
+            }
+
+            .avatar-container {
+                width: 200px;
+                height: 200px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            p {
+                font-size: 1rem;
+            }
+
+            .gallery {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                padding: 0 1rem;
+            }
+
+            footer {
+                padding: 1.5rem;
+            }
+
+            .contact-link {
+                display: block;
+                margin: 0.5rem 0;
+            }
+        }
+
+        /* 添加液态玻璃动画效果 */
+        @keyframes liquid {
+            0% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+            50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+            100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+        }
+
+        .liquid-glass {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: rgba(93, 173, 226, 0.1);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border-radius: 50%;
+            filter: blur(40px);
+            animation: liquid 15s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        .liquid-glass:nth-child(1) {
+            top: 10%;
+            left: 10%;
+            width: 200px;
+            height: 200px;
+            animation-delay: 0s;
+        }
+
+        .liquid-glass:nth-child(2) {
+            top: 70%;
+            right: 10%;
+            width: 250px;
+            height: 250px;
+            animation-delay: 2s;
+        }
+
+        .liquid-glass:nth-child(3) {
+            bottom: 10%;
+            left: 30%;
+            width: 180px;
+            height: 180px;
+            animation-delay: 4s;
         }
     </style>
 </head>
 <body>
+    <!-- 液态玻璃背景元素 -->
+    <div class="liquid-glass"></div>
+    <div class="liquid-glass"></div>
+    <div class="liquid-glass"></div>
+
     <nav class="nav-container">
         <div class="header">
             <div class="avatar-container">
@@ -247,10 +406,15 @@
                  class="contact-link">推特</a>
             🔗 <a href="https://b23.tv/AbDkict" target="_blank" rel="noopener noreferrer" class="contact-link">哔哩哔哩</a>
         </p>
+        <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.7;">作者: AutoGLM (网页内容由AI生成) Copyright © 2025 AutoGLM. 保留所有权利.</p>
     </footer>
 
-    <!-- 新增音乐控制按钮 -->
+    <!-- 音乐控制按钮 -->
     <button id="music-control" class="playing">暂停音乐</button>
+
+    <div id="popup" class="popup">
+        <span class="copied-text">已复制到剪贴板!</span>
+    </div>
 
     <script>
         // 音乐控制逻辑
@@ -270,12 +434,14 @@
             audio.play().then(() => {
                 isAutoPlayed = true;
                 musicControl.textContent = '暂停音乐';
+                musicControl.classList.add('playing');
                 setTimeout(() => {
                     audio.muted = false; // 1秒后取消静音
                 }, 1000);
             }).catch(error => {
                 console.error('自动播放失败:', error);
                 musicControl.textContent = '点击播放音乐';
+                musicControl.classList.remove('playing');
             });
         }
 
@@ -285,6 +451,7 @@
             } else {
                 audio.pause();
                 musicControl.textContent = '播放音乐';
+                musicControl.classList.remove('playing');
             }
         });
 
@@ -293,6 +460,20 @@
             musicControl.textContent = '播放音乐';
             musicControl.classList.remove('playing');
         });
+
+        // 复制到剪贴板功能
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                const popup = document.getElementById('popup');
+                popup.classList.add('active');
+                
+                setTimeout(() => {
+                    popup.classList.remove('active');
+                }, 2000);
+            }).catch(err => {
+                console.error('复制失败:', err);
+            });
+        }
     </script>
 </body>
 </html>
